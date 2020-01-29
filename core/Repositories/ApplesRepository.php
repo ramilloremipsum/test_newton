@@ -10,17 +10,7 @@ use RuntimeException;
 
 class ApplesRepository
 {
-    public static function create($color_id, $tree_id)
-    {
-        $apple = new Apples();
-        $apple->color_id = $color_id;
-        $apple->tree_id = $tree_id;
-        $apple->generateCreatedAt();
-        $apple->size = 1;
-        $apple->is_on_tree = 1;
-        $apple->fell_at = NULL;
-        return $apple;
-    }
+
 
     /**
      * @param $id

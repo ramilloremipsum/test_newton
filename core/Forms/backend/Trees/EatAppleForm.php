@@ -18,13 +18,14 @@ class EatAppleForm extends Model
     public function rules()
     {
         return [
-            ['eat_percent','filter', 'filter' => function ($value) {
-                if (trim($value) == '') {
-                    return $this->eat_percent = 0;
-                }
-            }],
+            ['eat_percent', 'filter', 'filter' => [$this, 'normalizeValue']],
             [['eat_percent'], 'integer', 'min' => 0, 'max' => 100, 'message' => false, 'tooSmall' => 'И это тоже нереально', 'tooBig' => 'Как это ты себе представляешь?'],
             [['apple_id'], 'exist', 'skipOnError' => true, 'targetClass' => Apples::className(), 'targetAttribute' => ['apple_id' => 'id']]
         ];
+    }
+
+    public function normalizeValue($value)
+    {
+        return trim($value) == '' ? 0 : $value;
     }
 }

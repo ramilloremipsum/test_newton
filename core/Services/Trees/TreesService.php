@@ -3,15 +3,12 @@
 
 namespace core\Services\Trees;
 
-
-use core\Forms\backend\Trees\CreateAppleForm;
-use core\Repositories\ApplesRepository;
+use core\ActiveRecord\Trees\Trees;
 use core\Repositories\TreesRepository;
 use yii\helpers\Json;
 
 class TreesService
 {
-
     private $treesRepository;
 
     public function __construct(TreesRepository $treesRepository)
@@ -23,7 +20,7 @@ class TreesService
     {
         try {
             $randomName = self::getNameFromApi();
-            $tree = $this->treesRepository->create($randomName);
+            $tree = Trees::create($randomName);
             $this->treesRepository->save($tree);
         } catch (\Exception $e) {
             throw $e;
@@ -34,9 +31,7 @@ class TreesService
 
     static function getNameFromApi()
     {
-
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
             CURLOPT_URL => "http://names.drycodes.com/1?nameOptions=boy_names",
             CURLOPT_RETURNTRANSFER => true,
@@ -49,7 +44,6 @@ class TreesService
                 "cache-control: no-cache"
             ),
         ));
-
         $response = curl_exec($curl);
         $err = curl_error($curl);
 

@@ -36,6 +36,7 @@ class Apples extends \yii\db\ActiveRecord
 
     const MIN_RANDOM_GENERATE = 1;
     const MAX_RANDOM_GENERATE = 10;
+
     private $now_timestamp;
 
 
@@ -50,15 +51,16 @@ class Apples extends \yii\db\ActiveRecord
         return 'apples';
     }
 
-    public function rules()
+    public static function create($color_id, $tree_id)
     {
-        return [
-            [['tree_id', 'color_id', 'created_at'], 'required'],
-            [['tree_id', 'color_id', 'is_on_tree', 'created_at', 'fell_at'], 'integer'],
-            [['size'], 'number'],
-            [['color_id'], 'exist', 'skipOnError' => true, 'targetClass' => AppleColors::className(), 'targetAttribute' => ['color_id' => 'id']],
-            [['tree_id'], 'exist', 'skipOnError' => true, 'targetClass' => Trees::className(), 'targetAttribute' => ['tree_id' => 'id']],
-        ];
+        $apple = new self();
+        $apple->color_id = $color_id;
+        $apple->tree_id = $tree_id;
+        $apple->generateCreatedAt();
+        $apple->size = 1;
+        $apple->is_on_tree = 1;
+        $apple->fell_at = NULL;
+        return $apple;
     }
 
     public function getColor()

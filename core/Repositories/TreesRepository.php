@@ -10,12 +10,6 @@ use RuntimeException;
 class TreesRepository
 {
 
-    public static function create($name)
-    {
-        $tree = new Trees();
-        $tree->name = $name;
-        return $tree;
-    }
 
     public static function save(Trees $tree)
     {

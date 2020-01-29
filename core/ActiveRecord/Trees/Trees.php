@@ -35,4 +35,11 @@ class Trees extends \yii\db\ActiveRecord
         return $this->hasMany(Apples::className(), ['tree_id' => 'id'])->count();
     }
 
+    public static function create($name)
+    {
+        $tree = new self();
+        $tree->name = $name;
+        return $tree;
+    }
+
 }

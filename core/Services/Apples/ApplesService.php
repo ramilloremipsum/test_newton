@@ -30,7 +30,7 @@ class ApplesService
 
     public function create($tree_id, $color_id)
     {
-        $apple = $this->applesRepository->create($color_id, $tree_id);
+        $apple = Apples::create($color_id, $tree_id);
         $this->applesRepository->save($apple);
     }
 
